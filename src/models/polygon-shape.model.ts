@@ -1,52 +1,7 @@
-interface IPoint {
-    x: number;
-    y: number;
-}
+import {ClipCorner, ClipSide, ClipLeftSide, CLipRightSide, ClipSidePairs, IPoint, IPolygonPoints} from './polygon-shape.types';
+import {polygonDeepCopy} from './polygon-shape.util';
 
-interface IPolygonPoints {
-    firstPoint: IPoint;
-    secondPoint: IPoint;
-    thirdPoint: IPoint;
-    fourthPoint: IPoint;
-}
-
-enum ClipCorner {
-    Down = 'DOWN',
-    Up = 'UP'
-}
-
-enum ClipSide {
-    Left = 'LEFT',
-    Right = 'RIGHT',
-}
-
-function polygonDeepCopy<T>(source: T): T {
-    const target: any = {};
-    for (const objKey in source) {
-        if (source.hasOwnProperty(objKey)) {
-            if (typeof source[objKey] === 'object') {
-                target[objKey] = {...source[objKey]};
-            }
-        }
-    }
-    return target;
-}
-
-class PolygonShape {
-    private polygon: IPolygonPoints;
-
-    private constructor(polygon?: IPolygonPoints) {
-        if (polygon) {
-            this.polygon = polygon;
-        } else {
-            this.polygon = PolygonShape.getDefaultPolygon();
-        }
-    }
-
-    static createPolygon(polygon?: IPolygonPoints) {
-        return new PolygonShape(polygon).polygon;
-    }
-
+export class PolygonShape {
     static getDefaultPolygon(): IPolygonPoints {
         return {
             firstPoint: {x: 0, y: 0},
@@ -56,13 +11,13 @@ class PolygonShape {
         };
     }
 
-    static combine(polygon1: IPolygonPoints, polygon2: IPolygonPoints): IPolygonPoints {
+    static concatPolygons(polygon1: IPolygonPoints, polygon2: IPolygonPoints): IPolygonPoints {
         const copyPolygon1 = polygonDeepCopy(polygon1);
         const copyPolygon2 = polygonDeepCopy(polygon2);
         return {
             firstPoint: copyPolygon1.firstPoint,
             secondPoint: copyPolygon2.secondPoint,
-            thirdPoint: copyPolygon1.thirdPoint,
+            thirdPoint: copyPolygon2.thirdPoint,
             fourthPoint: copyPolygon1.fourthPoint
         };
     }
@@ -82,15 +37,11 @@ class PolygonShape {
     }
 }
 
-type CLipRightSide = Omit<IPolygonPoints, 'firstPoint' | 'fourthPoint'>;
-type ClipLeftSide = Omit<IPolygonPoints, 'secondPoint' | 'thirdPoint'>;
-type ClipSidePairs = CLipRightSide | ClipLeftSide;
-
-class ClipPathConfig {
+export class ClipPathConfig {
     private xOffset: number;
 
-    constructor(private polygonShape: IPolygonPoints, degreeAngle: number, height: number, width: number) {
-        this.angleToOffsetX(degreeAngle, height, width);
+    constructor(degreeAngle: number) {
+        this.angleToOffsetX(degreeAngle);
     }
 
     private static isRightSide(clipSidePairs: ClipSidePairs): clipSidePairs is CLipRightSide {
@@ -132,18 +83,18 @@ class ClipPathConfig {
     private setClipSide(clipSide: ClipSide): ClipSidePairs {
         switch (clipSide) {
             case ClipSide.Left:
-                const {firstPoint, fourthPoint} = this.polygonShape;
+                const {firstPoint, fourthPoint} = PolygonShape.getDefaultPolygon();
                 return polygonDeepCopy({firstPoint, fourthPoint});
             case ClipSide.Right:
-                const {secondPoint, thirdPoint} = this.polygonShape;
+                const {secondPoint, thirdPoint} = PolygonShape.getDefaultPolygon();
                 return polygonDeepCopy({secondPoint, thirdPoint});
         }
     }
 
-    private angleToOffsetX(degreeAngle: number, height: number, width: number): void {
+    private angleToOffsetX(degreeAngle: number): void {
         const radAngle = (degreeAngle / 180) * Math.PI;
-        const oppositeSide = Math.tan(radAngle) * height;
-        this.xOffset = (oppositeSide / width) * 100;
+        const oppositeSide = Math.tan(radAngle) * 100;
+        this.xOffset = (oppositeSide / 100) * 100;
     }
 
     clipConfig(clipSide: ClipSide, clipCorner: ClipCorner): ClipSidePairs {
@@ -152,7 +103,7 @@ class ClipPathConfig {
     }
 
     polygonArithmetic(workerPolygon: ClipSidePairs, targetAxis: keyof IPoint = 'x'): IPolygonPoints {
-        const resultPolygon = polygonDeepCopy(this.polygonShape);
+        const resultPolygon = polygonDeepCopy(PolygonShape.getDefaultPolygon());
         for (const point in workerPolygon) {
             if (workerPolygon.hasOwnProperty(point)) {
                 resultPolygon[point][targetAxis] += workerPolygon[point][targetAxis];
@@ -160,23 +111,5 @@ class ClipPathConfig {
         }
         return resultPolygon;
     }
-
 }
-
-const polygon1 = PolygonShape.createPolygon({...PolygonShape.getDefaultPolygon(), firstPoint: {x: 10, y: 45}});
-const config1 = new ClipPathConfig(polygon1, 34, 100, 100);
-const clipPath1 = config1.clipConfig(ClipSide.Left, ClipCorner.Up);
-const polygonResult1 = config1.polygonArithmetic(clipPath1);
-
-const polygon2 = PolygonShape.createPolygon({
-    ...PolygonShape.getDefaultPolygon(),
-    firstPoint: {x: 45, y: 67},
-    thirdPoint: {x: 200, y: 37}
-});
-const config2 = new ClipPathConfig(polygon2, 65, 100, 100);
-const clipPath2 = config2.clipConfig(ClipSide.Right, ClipCorner.Up);
-
-const polygonResult2 = config2.polygonArithmetic(clipPath2);
-
-console.log(PolygonShape.combine(polygonResult1, polygonResult2));
 
