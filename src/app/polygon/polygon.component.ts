@@ -1,34 +1,32 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
-import {ClipPathConfig, PolygonShape} from '../../models/polygon-shape.model';
-import {ClipCorner, ClipSide} from '../../models/polygon-shape.types';
+import {PolygonShape} from '../../models/polygon-shape.model';
+import {ClipCorner} from '../../models/polygon-shape.types';
 import {PolygonHelperService} from './polygon-helper.service';
+import {PolygonCreationService} from './polygon-creation.service';
 
 @Component({
     selector: 'app-polygon',
     templateUrl: './polygon.component.html',
     styleUrls: ['./polygon.component.scss'],
-    providers: [PolygonHelperService],
+    providers: [PolygonHelperService, PolygonCreationService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolygonComponent implements OnInit {
     polygonStyle: any = {};
     polygonInitStyle: any = {};
-    constructor(private changeDetectorRef: ChangeDetectorRef, private polygonHelperService: PolygonHelperService) {
+
+    constructor(
+        private changeDetectorRef: ChangeDetectorRef,
+        private polygonHelperService: PolygonHelperService,
+        private polygonCreationService: PolygonCreationService) {
     }
 
     ngOnInit(): void {
-        const config1 = new ClipPathConfig(15);
-        const clipPath1 = config1.clipConfig(ClipSide.Left, ClipCorner.Up);
-        const polygonResult1 = config1.polygonArithmetic(clipPath1);
-
-        const config2 = new ClipPathConfig(10);
-        const clipPath2 = config2.clipConfig(ClipSide.Right, ClipCorner.Down);
-
-        const polygonResult2 = config2.polygonArithmetic(clipPath2);
-
-        const concatResult = PolygonShape.concatPolygons(polygonResult1, polygonResult2);
-
-        const finalResult = PolygonShape.build(concatResult);
+        this.polygonCreationService.setBothSides(
+            {degAngle: 10, clipCorner: ClipCorner.Up},
+            {degAngle: 25, clipCorner: ClipCorner.Down}
+        );
+        const finalResult = this.polygonCreationService.build();
 
         this.polygonStyle = {
             height: '100%',

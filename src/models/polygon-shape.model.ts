@@ -11,9 +11,9 @@ export class PolygonShape {
         };
     }
 
-    static concatPolygons(polygon1: IPolygonPoints, polygon2: IPolygonPoints): IPolygonPoints {
-        const copyPolygon1 = polygonDeepCopy(polygon1);
-        const copyPolygon2 = polygonDeepCopy(polygon2);
+    static concatPolygons(polygonLeft: IPolygonPoints, polygonRight: IPolygonPoints): IPolygonPoints {
+        const copyPolygon1 = polygonDeepCopy(polygonLeft);
+        const copyPolygon2 = polygonDeepCopy(polygonRight);
         return {
             firstPoint: copyPolygon1.firstPoint,
             secondPoint: copyPolygon2.secondPoint,
