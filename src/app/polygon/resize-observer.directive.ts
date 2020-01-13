@@ -1,12 +1,12 @@
 import {Directive} from '@angular/core';
-import {PolygonService} from './polygon.service';
+import {PolygonHelperService} from './polygon-helper.service';
 
 @Directive(
     {selector: '[appResizeObserver]'}
 )
 export class ResizeObserverDirective {
 
-    constructor(private polygonService: PolygonService) {
-        this.polygonService.setDirective = true;
+    constructor(private polygonHelperService: PolygonHelperService) {
+        this.polygonHelperService.isSetDirective = true;
     }
 }

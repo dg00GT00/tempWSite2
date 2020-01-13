@@ -1,28 +1,19 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {ClipPathConfig, PolygonShape} from '../../models/polygon-shape.model';
 import {ClipCorner, ClipSide} from '../../models/polygon-shape.types';
-import {PolygonService} from './polygon.service';
+import {PolygonHelperService} from './polygon-helper.service';
 
 @Component({
     selector: 'app-polygon',
     templateUrl: './polygon.component.html',
     styleUrls: ['./polygon.component.scss'],
+    providers: [PolygonHelperService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PolygonComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PolygonComponent implements OnInit {
     polygonStyle: any = {};
-    @ViewChild('polygon', {static: true}) polygon: ElementRef;
-    constructor(private changeDetectorRef: ChangeDetectorRef, private polygonService: PolygonService) {
+    polygonInitStyle: any = {};
+    constructor(private changeDetectorRef: ChangeDetectorRef, private polygonHelperService: PolygonHelperService) {
     }
 
     ngOnInit(): void {
@@ -44,31 +35,21 @@ export class PolygonComponent implements OnInit, AfterViewInit, OnDestroy {
             width: '100%',
             clipPath: finalResult
         };
-
-        if (this.polygonService.setDirective) {
-            this.polygonService.setElement(this.polygon);
-        }
+        this.polygonInitStyle = {...this.polygonStyle};
     }
 
-    ngAfterViewInit(): void {
-        const modifiedStyle = {...this.polygonStyle};
-        this.polygonService.resizeSub.subscribe((entry: any) => {
-            console.log(entry.target.parentNode.className, entry.contentRect.width);
-            if (entry.contentRect.width < 400) {
+    @HostListener('resize-observer', ['$event'])
+    onResize($event: any) {
+        if (this.polygonHelperService.isSetDirective) {
+            if ($event.contentRect.width < 1400) {
                 this.polygonStyle = {
-                    ...modifiedStyle,
+                    ...this.polygonInitStyle,
                     clipPath: PolygonShape.build(PolygonShape.getDefaultPolygon())
                 };
             } else {
-                this.polygonStyle = modifiedStyle;
+                this.polygonStyle = this.polygonInitStyle;
             }
             this.changeDetectorRef.detectChanges();
-        });
-
+        }
     }
-
-    ngOnDestroy(): void {
-        this.polygonService.obsDisposable();
-    }
-
 }
