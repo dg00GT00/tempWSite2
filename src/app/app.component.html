@@ -1,3 +1,6 @@
+<!--suppress AngularInvalidExpressionResultType -->
 <div>
-    <app-polygon appResizeObserver class="left-polygon"></app-polygon>
+    <app-polygon class="left-polygon"
+                 [appPolygonConfig]="{Left:{degAngle: 24, clipCorner: 'Down'}}">
+    </app-polygon>
 </div>
