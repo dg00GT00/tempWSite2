@@ -3,9 +3,7 @@ import {polygonDeepCopy} from '../../../models/polygon-shape.util';
 import {PolygonCreationService} from './polygon-creation.service';
 import {Injectable} from '@angular/core';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class PolygonCalcCropService {
     private offsetWidth: number;
     private resizeCropWidth: number;

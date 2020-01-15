@@ -22,12 +22,12 @@ export class PolygonComponent implements AfterViewInit {
         }, 0);
     }
 
-    resetPolyStyle(clipPath: string) {
+    resetPolyStyle(clipPath: string): void {
         this.setPolyStyle(clipPath);
         this.changeDetectorRef.detectChanges();
     }
 
-    private setPolyStyle(clipPath: string) {
+    private setPolyStyle(clipPath: string): void {
         this.polygonStyle = {
             height: '100%',
             width: '100%',

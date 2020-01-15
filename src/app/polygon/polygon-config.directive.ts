@@ -6,6 +6,10 @@ import {PolygonComponent} from './polygon.component';
 
 @Directive({
     selector: '[appPolygonConfig]',
+    providers: [
+        {provide: PolygonDynCropService, useClass: PolygonDynCropService},
+        {provide: PolygonCalcCropService, useClass: PolygonCalcCropService},
+    ]
 })
 export class PolygonConfigDirective implements OnInit {
     @Input() resizeCropWidth: number;

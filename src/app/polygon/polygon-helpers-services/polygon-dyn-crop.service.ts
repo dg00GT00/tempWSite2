@@ -3,7 +3,7 @@ import {IPolygonConfig, IPolygonPoints} from '../../../models/polygon-shape.type
 import {PolygonCreationService} from './polygon-creation.service';
 import {PolygonCalcCropService} from './polygon-calc-crop.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class PolygonDynCropService {
     private finalPolygon: IPolygonPoints;
 
