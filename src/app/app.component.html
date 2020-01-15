@@ -1,6 +1,12 @@
 <!--suppress AngularInvalidExpressionResultType -->
 <div>
     <app-polygon class="left-polygon"
-                 [appPolygonConfig]="{Left:{degAngle: 14, clipCorner: 'Down'}}" [resizeCropWidth]="1400">
+                 [appPolygonConfig]="{
+                    Both: {
+                        Right:{degAngle: 14, clipCorner: 'Down'},
+                        Left: {degAngle: 24, clipCorner: 'Up'}
+                        }
+                    }"
+                 >
     </app-polygon>
 </div>

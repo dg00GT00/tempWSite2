@@ -1,7 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit, SkipSelf} from '@angular/core';
-import {PolygonShape} from '../../models/polygon-shape.model';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PolygonDynCropService} from './polygon-dyn-crop.service';
-import {PolygonCreationService} from './polygon-creation.service';
 
 @Component({
     selector: 'app-polygon',
@@ -20,29 +18,14 @@ export class PolygonComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const finalResult = this.polygonDynCropService.buildPolygon();
-
-        this.polygonStyle = {
-            height: '100%',
-            width: '100%',
-            clipPath: finalResult
-        };
-        this.polygonInitStyle = {...this.polygonStyle};
-    }
-
-    @HostListener('resize-observer', ['$event'])
-    onResize($event: any) {
-        const dynWidth = this.polygonDynCropService.isDynamic;
-        if (dynWidth) {
-            if ($event.contentRect.width < dynWidth) {
+        this.polygonDynCropService.finalPolygon.subscribe(polygon => {
                 this.polygonStyle = {
-                    ...this.polygonInitStyle,
-                    clipPath: PolygonShape.build(PolygonShape.getDefaultPolygon())
+                    height: '100%',
+                    width: '100%',
+                    clipPath: this.polygonDynCropService.buildPolygon(polygon)
                 };
-            } else {
-                this.polygonStyle = this.polygonInitStyle;
+                this.changeDetectorRef.detectChanges();
             }
-            this.changeDetectorRef.detectChanges();
-        }
+        );
     }
 }

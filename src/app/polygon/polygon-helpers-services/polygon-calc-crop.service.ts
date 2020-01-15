@@ -1,63 +1,50 @@
-import {Injectable} from '@angular/core';
-import {IConfigSides, IPolygonPoints, IResizeDirectiveConfig} from '../../models/polygon-shape.types';
-import {PolygonCreationService} from './polygon-creation.service';
+import {IConfigSides, IPolygonPoints, IPolygonConfig} from '../../models/polygon-shape.types';
 import {polygonDeepCopy} from '../../models/polygon-shape.util';
+import {PolygonCreationService} from './polygon-creation.service';
+import {Injectable} from '@angular/core';
 
-@Injectable({providedIn: 'root'})
-export class PolygonDynCropService {
+@Injectable({
+    providedIn: 'root'
+})
+export class PolygonCalcCropService {
     private offsetWidth: number;
     private resizeCropWidth: number;
-    private workerPolygon: IPolygonPoints;
 
     constructor(private polygonCreationService: PolygonCreationService) {
     }
 
-    get isDynamic(): number {
-        return this.resizeCropWidth;
-    }
-
-    setDynConfig(offsetWidth: number, resizeCropWidth: number): void {
-        this.offsetWidth = offsetWidth;
+    setCropWidth(resizeCropWidth: number) {
         this.resizeCropWidth = resizeCropWidth;
     }
 
-    setCropConfig(resizeConfig: IResizeDirectiveConfig): void {
-        if (resizeConfig.Both) {
-            this.bothSidesConfig(resizeConfig);
-        }
-        if (resizeConfig.Right) {
-            this.rightSide(resizeConfig);
-        }
-        if (resizeConfig.Left) {
-            this.leftSide(resizeConfig);
-        }
+    setDynConfig(offsetWidth: number): void {
+        this.offsetWidth = offsetWidth;
     }
 
-    buildPolygon(): string {
-        return this.polygonCreationService.buildPolygon(this.workerPolygon);
-    }
-
-    private leftSide(resizeConfig: IResizeDirectiveConfig): void {
-        this.workerPolygon = this.polygonCreationService.setLeftSide(resizeConfig.Left as IConfigSides);
+    leftSide(resizeConfig: IPolygonConfig): IPolygonPoints {
+        const leftSide = this.polygonCreationService.setLeftSide(resizeConfig.Left as IConfigSides);
         if (this.resizeCropWidth) {
-            this.workerPolygon = this.calcLeftSide(this.workerPolygon);
+            return this.calcLeftSide(leftSide);
         }
+        return leftSide;
     }
 
-    private rightSide(resizeConfig: IResizeDirectiveConfig): void {
-        this.workerPolygon = this.polygonCreationService.setRightSide(resizeConfig.Right as IConfigSides);
+    rightSide(resizeConfig: IPolygonConfig): IPolygonPoints {
+        const rightSide = this.polygonCreationService.setRightSide(resizeConfig.Right as IConfigSides);
         if (this.resizeCropWidth) {
-            this.workerPolygon = this.calcRightSide(this.workerPolygon);
+            return this.calcRightSide(rightSide);
         }
+        return rightSide;
     }
 
-    private bothSidesConfig(resizeConfig: IResizeDirectiveConfig): void {
-        this.workerPolygon = this.polygonCreationService.setBothSides(
+    bothSidesConfig(resizeConfig: IPolygonConfig): IPolygonPoints {
+        const bothSides = this.polygonCreationService.setBothSides(
             resizeConfig.Both.Left as IConfigSides,
             resizeConfig.Both.Right as IConfigSides);
         if (this.resizeCropWidth) {
-            this.workerPolygon = this.calcBothSides(this.workerPolygon);
+            return this.calcBothSides(bothSides);
         }
+        return bothSides;
     }
 
     private calcCropTax(): number {
@@ -78,12 +65,13 @@ export class PolygonDynCropService {
 
     private calcRightSide(sidePolygon: IPolygonPoints): IPolygonPoints {
         const workerPolygon = polygonDeepCopy(sidePolygon);
-        if (this.calcCropTax()) {
+        const calcCropTax = this.calcCropTax();
+        if (calcCropTax) {
             for (const point in workerPolygon) {
                 if (workerPolygon.hasOwnProperty(point)) {
                     if ((point === 'secondPoint' || point === 'thirdPoint') && workerPolygon[point].x !== 100) {
                         const diffPercentage = 100 - workerPolygon[point].x;
-                        const partialPercentage = diffPercentage / this.calcCropTax();
+                        const partialPercentage = diffPercentage / calcCropTax;
                         workerPolygon[point].x += diffPercentage - partialPercentage;
                     }
                 }
@@ -96,16 +84,17 @@ export class PolygonDynCropService {
 
     private calcLeftSide(sidePolygon: IPolygonPoints): IPolygonPoints {
         const workerPolygon = polygonDeepCopy(sidePolygon);
-        if (this.calcCropTax()) {
+        const calcCropTax = this.calcCropTax();
+        if (calcCropTax) {
             for (const point in workerPolygon) {
                 if (workerPolygon.hasOwnProperty(point)) {
-                    if ((point === 'firstPoint' || point === 'fourthPoint' && workerPolygon[point].x === 0)) {
-                        workerPolygon[point].x /= this.calcCropTax();
+                    if ((point === 'firstPoint' || point === 'fourthPoint' && workerPolygon[point].x !== 0)) {
+                        workerPolygon[point].x /= calcCropTax;
                     }
                 }
             }
         } else {
-            workerPolygon.firstPoint.x = workerPolygon.fourthPoint.x = this.calcCropTax();
+            workerPolygon.firstPoint.x = workerPolygon.fourthPoint.x = calcCropTax;
         }
         return workerPolygon;
     }
