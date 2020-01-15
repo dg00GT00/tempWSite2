@@ -1,19 +1,21 @@
 import {Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
-import {PolygonDynCropService} from './polygon-dyn-crop.service';
-import {IResizeDirectiveConfig} from '../../models/polygon-shape.types';
-import {PolygonCalcCropService} from './polygon-calc-crop.service';
+import {PolygonDynCropService} from './polygon-helpers-services/polygon-dyn-crop.service';
+import {IPolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonCalcCropService} from './polygon-helpers-services/polygon-calc-crop.service';
+import {PolygonComponent} from './polygon.component';
 
 @Directive({
     selector: '[appPolygonConfig]',
 })
 export class PolygonConfigDirective implements OnInit {
     @Input() resizeCropWidth: number;
-    @Input('appPolygonConfig') resizeConfig: IResizeDirectiveConfig = {};
+    @Input('appPolygonConfig') resizeConfig: IPolygonConfig = {};
 
     constructor(
         private el: ElementRef,
         private polygonDynCropService: PolygonDynCropService,
         private polygonCalcCropService: PolygonCalcCropService,
+        private polygonComponent: PolygonComponent
     ) {
     }
 
@@ -27,10 +29,11 @@ export class PolygonConfigDirective implements OnInit {
         this.polygonDynCropService.setCropConfig(this.resizeConfig);
     }
 
-    @HostListener('resize-observer', ['$event'])
-    onResize($event: any) {
+    @HostListener('resize-observer')
+    onResize() {
         if (this.resizeCropWidth) {
             this.dynPolygonConfig();
+            this.polygonComponent.resetPolyStyle(this.polygonDynCropService.buildPolygon());
         }
     }
 }

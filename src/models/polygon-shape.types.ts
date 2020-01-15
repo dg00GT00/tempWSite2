@@ -35,4 +35,4 @@ export interface IConfigSides {
 
 type InnerConfig = Record<keyof Omit<IConfigSides, 'degAngle'>, keyof typeof ClipCorner>;
 type RecordConfig = Record<keyof typeof ClipSide, InnerConfig & {degAngle: number}>;
-export type IResizeDirectiveConfig = Partial<RecordConfig & { Both: RecordConfig }>;
+export type IPolygonConfig = Partial<RecordConfig & { Both: RecordConfig }>;

@@ -1,5 +1,5 @@
-import {IConfigSides, IPolygonPoints, IPolygonConfig} from '../../models/polygon-shape.types';
-import {polygonDeepCopy} from '../../models/polygon-shape.util';
+import {IConfigSides, IPolygonPoints, IPolygonConfig} from '../../../models/polygon-shape.types';
+import {polygonDeepCopy} from '../../../models/polygon-shape.util';
 import {PolygonCreationService} from './polygon-creation.service';
 import {Injectable} from '@angular/core';
 

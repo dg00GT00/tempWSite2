@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {ClipCorner, ClipSide, ClipSidePairs, IConfigSides, IPolygonPoints} from '../../models/polygon-shape.types';
-import {ClipPathConfig, PolygonShape} from '../../models/polygon-shape.model';
+import {ClipCorner, ClipSide, ClipSidePairs, IConfigSides, IPolygonPoints} from '../../../models/polygon-shape.types';
+import {ClipPathConfig, PolygonShape} from '../../../models/polygon-shape.model';
 
 @Injectable({providedIn: 'root'})
 export class PolygonCreationService {

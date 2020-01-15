@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {PolygonConfigDirective} from './polygon/polygon-config.directive';
 import {PolygonComponent} from './polygon/polygon.component';
-import {ResizeObserverEventService} from './polygon/resize-observer-event.service';
+import {ResizeObserverEventService} from './polygon/polygon-helpers-services/resize-observer-event.service';
 
 @NgModule({
     declarations: [
