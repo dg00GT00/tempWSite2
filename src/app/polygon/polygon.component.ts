@@ -1,13 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit, SkipSelf} from '@angular/core';
 import {PolygonShape} from '../../models/polygon-shape.model';
-import {ClipCorner} from '../../models/polygon-shape.types';
 import {PolygonDynCropService} from './polygon-dyn-crop.service';
+import {PolygonCreationService} from './polygon-creation.service';
 
 @Component({
     selector: 'app-polygon',
     templateUrl: './polygon.component.html',
     styleUrls: ['./polygon.component.scss'],
-    providers: [PolygonDynCropService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolygonComponent implements OnInit {
@@ -33,8 +32,9 @@ export class PolygonComponent implements OnInit {
 
     @HostListener('resize-observer', ['$event'])
     onResize($event: any) {
-        if (this.polygonDynCropService.isDynamic) {
-            if ($event.contentRect.width < 1400) {
+        const dynWidth = this.polygonDynCropService.isDynamic;
+        if (dynWidth) {
+            if ($event.contentRect.width < dynWidth) {
                 this.polygonStyle = {
                     ...this.polygonInitStyle,
                     clipPath: PolygonShape.build(PolygonShape.getDefaultPolygon())

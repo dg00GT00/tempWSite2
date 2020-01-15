@@ -1,9 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {IConfigSides, IPolygonPoints, IResizeDirectiveConfig} from '../../models/polygon-shape.types';
 import {PolygonCreationService} from './polygon-creation.service';
 import {polygonDeepCopy} from '../../models/polygon-shape.util';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PolygonDynCropService {
     private offsetWidth: number;
     private resizeCropWidth: number;
