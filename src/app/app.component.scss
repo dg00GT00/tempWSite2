@@ -1,20 +1,2 @@
-div {
-    display: flex;
-    height: 50vh;
-    width: 100vw;
 
-    .left-polygon {
-        flex: 1;
-        div {
-            background-color: blue;
-        }
-    }
-
-    .right-polygon {
-        flex: 1;
-        div {
-            background-color: red;
-        }
-    }
-}
 

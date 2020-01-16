@@ -1,10 +1,9 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PolygonDynCropService} from './polygon-helpers-services/polygon-dyn-crop.service';
 
 @Component({
     selector: 'app-polygon',
     templateUrl: './polygon.component.html',
-    styleUrls: ['./polygon.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolygonComponent implements AfterViewInit {
@@ -17,9 +16,7 @@ export class PolygonComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.setPolyStyle(this.polygonDynCropService.buildPolygon());
-        }, 0);
+        this.setPolyStyle(this.polygonDynCropService.buildPolygon());
     }
 
     resetPolyStyle(clipPath: string): void {

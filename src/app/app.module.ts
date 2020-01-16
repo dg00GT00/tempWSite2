@@ -2,15 +2,17 @@ import {BrowserModule, EVENT_MANAGER_PLUGINS} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {PolygonConfigDirective} from './polygon/polygon-config.directive';
-import {PolygonComponent} from './polygon/polygon.component';
-import {ResizeObserverEventService} from './polygon/polygon-helpers-services/resize-observer-event.service';
+import {PolygonConfigDirective} from './polygon-clippath/polygon-config.directive';
+import {PolygonComponent} from './polygon-clippath/polygon.component';
+import {ResizeObserverEventService} from './polygon-clippath/polygon-helpers-services/resize-observer-event.service';
+import {MainHeaderComponent} from './main-header/main-header.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PolygonConfigDirective,
-        PolygonComponent
+        PolygonComponent,
+        MainHeaderComponent
     ],
     imports: [
         BrowserModule

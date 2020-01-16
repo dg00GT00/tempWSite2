@@ -1,0 +1,25 @@
+div {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+
+    .left-polygon {
+        flex: 1 0 auto;
+
+        div {
+            background-color: blue;
+        }
+    }
+
+    .main-division {
+        flex: 0.5 0 10%;
+    }
+
+    .right-polygon {
+        flex: 0.2 1 auto;
+
+        div {
+            background-color: red;
+        }
+    }
+}
