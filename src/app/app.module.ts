@@ -6,13 +6,15 @@ import {PolygonConfigDirective} from './polygon-clippath/polygon-config.directiv
 import {PolygonComponent} from './polygon-clippath/polygon.component';
 import {ResizeObserverEventService} from './polygon-clippath/polygon-helpers-services/resize-observer-event.service';
 import {MainHeaderComponent} from './main-header/main-header.component';
+import { PhotoFrameComponent } from './photo-frame/photo-frame.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         PolygonConfigDirective,
         PolygonComponent,
-        MainHeaderComponent
+        MainHeaderComponent,
+        PhotoFrameComponent
     ],
     imports: [
         BrowserModule

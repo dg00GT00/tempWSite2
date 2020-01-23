@@ -1,4 +1,4 @@
-import {ClipCorner, ClipSide, ClipLeftSide, CLipRightSide, ClipSidePairs, IPoint, IPolygonPoints} from './polygon-shape.types';
+import {ClipCorner, ClipLeftSide, CLipRightSide, ClipSide, ClipSidePairs, IPoint, IPolygonPoints} from './polygon-shape.types';
 import {polygonDeepCopy} from './polygon-shape.util';
 
 export class PolygonShape {
@@ -39,6 +39,7 @@ export class PolygonShape {
 
 export class ClipPathConfig {
     private xOffset: number;
+    private radAngle: number;
 
     constructor(degreeAngle: number) {
         this.angleToOffsetX(degreeAngle);
@@ -103,7 +104,7 @@ export class ClipPathConfig {
     }
 
     polygonArithmetic(workerPolygon: ClipSidePairs, targetAxis: keyof IPoint = 'x'): IPolygonPoints {
-        const resultPolygon = polygonDeepCopy(PolygonShape.getDefaultPolygon());
+        const resultPolygon = PolygonShape.getDefaultPolygon();
         for (const point in workerPolygon) {
             if (workerPolygon.hasOwnProperty(point)) {
                 resultPolygon[point][targetAxis] += workerPolygon[point][targetAxis];
@@ -112,4 +113,3 @@ export class ClipPathConfig {
         return resultPolygon;
     }
 }
-

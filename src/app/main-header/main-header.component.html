@@ -1,7 +1,9 @@
 <div>
-    <app-polygon class="left-polygon" [appPolygonConfig]="polygonConfigLeft"
+    <app-polygon id="Left" class="left-polygon" [appPolygonConfig]="polygonConfigLeft"
                  [resizeCropWidth]="cropWidthRight"></app-polygon>
-    <div class="main-division"></div>
-    <app-polygon class="right-polygon" [appPolygonConfig]="polygonConfigRight"
+    <div class="main-division">
+        <app-photo-frame></app-photo-frame>
+    </div>
+    <app-polygon id="Right" class="right-polygon" [appPolygonConfig]="polygonConfigRight"
                  [resizeCropWidth]="cropWidthLeft"></app-polygon>
 </div>

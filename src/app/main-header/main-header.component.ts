@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {IPolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/polygon-angle/polygon-angle.service';
 
 @Component({
     selector: 'app-main-header',
@@ -10,14 +11,14 @@ import {IPolygonConfig} from '../../models/polygon-shape.types';
 export class MainHeaderComponent implements OnInit {
     polygonConfigLeft: IPolygonConfig;
     polygonConfigRight: IPolygonConfig;
-    degAngle = 20;
-    cropWidthRight = 700;
-    cropWidthLeft = 140;
+    private degAngle = 20;
+    private cropWidthRight = 700;
+    private cropWidthLeft = 140;
 
     constructor() {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.polygonConfigLeft = {
             Right: {degAngle: this.degAngle, clipCorner: 'Up'},
         };

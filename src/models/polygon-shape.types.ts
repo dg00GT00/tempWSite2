@@ -9,6 +9,12 @@ export interface IPolygonPoints {
     thirdPoint: IPoint;
     fourthPoint: IPoint;
 }
+
+export interface IConfigSides {
+    degAngle: number;
+    clipCorner: ClipCorner;
+}
+
 /*
 // The following enums need to have identical keys and values names
 // for making the a proper type cast at future use of them
@@ -22,17 +28,15 @@ export enum ClipSide {
     Left = 'Left',
     Right = 'Right',
 }
+
 /****************************************************************************/
 
 export type CLipRightSide = Omit<IPolygonPoints, 'firstPoint' | 'fourthPoint'>;
 export type ClipLeftSide = Omit<IPolygonPoints, 'secondPoint' | 'thirdPoint'>;
+
 export type ClipSidePairs = CLipRightSide | ClipLeftSide;
 
-export interface IConfigSides {
-    degAngle: number;
-    clipCorner: ClipCorner;
-}
-
 type InnerConfig = Record<keyof Omit<IConfigSides, 'degAngle'>, keyof typeof ClipCorner>;
-type RecordConfig = Record<keyof typeof ClipSide, InnerConfig & {degAngle: number}>;
-export type IPolygonConfig = Partial<RecordConfig & { Both: RecordConfig }>;
+type RecordConfig<T> = Record<keyof typeof ClipSide, T>;
+export type IPolygonConfig<T = InnerConfig & { degAngle: number }> = Partial<RecordConfig<T> & { Both: RecordConfig<T> }>;
+
