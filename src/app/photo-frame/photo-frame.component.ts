@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {IPolygonPoints} from '../../models/polygon-shape.types';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/polygon-angle/polygon-angle.service';
 
 @Component({
     selector: 'app-photo-frame',
@@ -8,14 +8,11 @@ import {IPolygonPoints} from '../../models/polygon-shape.types';
 })
 export class PhotoFrameComponent implements OnInit {
 
-    constructor() {
-    }
+    // constructor(private polygonAngleService: PolygonAngleService) {
+    // }
 
     ngOnInit() {
     }
 
-    getFinalPolygon(finalPolygon: IPolygonPoints) {
-        console.log(finalPolygon);
 
-    }
 }

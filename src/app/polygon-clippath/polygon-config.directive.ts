@@ -7,11 +7,7 @@ import {PolygonAngleService} from './polygon-helpers-services/polygon-angle/poly
 
 @Directive({
     selector: '[appPolygonConfig]',
-    providers: [
-        {provide: PolygonDynClipService, useClass: PolygonDynClipService},
-        {provide: PolygonAngleService, useClass: PolygonAngleService},
-        {provide: PolygonCalcClipService, useClass: PolygonCalcClipService},
-    ]
+    providers: [PolygonDynClipService, PolygonCalcClipService]
 })
 export class PolygonConfigDirective implements OnInit, OnDestroy {
     @Input() resizeCropWidth: number;

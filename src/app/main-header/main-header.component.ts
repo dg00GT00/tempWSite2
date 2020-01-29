@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 import {IPolygonConfig} from '../../models/polygon-shape.types';
 import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/polygon-angle/polygon-angle.service';
 
@@ -12,10 +12,10 @@ export class MainHeaderComponent implements OnInit {
     polygonConfigLeft: IPolygonConfig;
     polygonConfigRight: IPolygonConfig;
     private degAngle = 20;
-    private cropWidthRight = 700;
-    private cropWidthLeft = 140;
+    cropWidthRight = 700;
+    cropWidthLeft = 140;
 
-    constructor() {
+    constructor(private polygonAngleService: PolygonAngleService) {
     }
 
     ngOnInit(): void {
@@ -25,5 +25,10 @@ export class MainHeaderComponent implements OnInit {
         this.polygonConfigRight = {
             Left: {degAngle: 87, clipCorner: 'Down'}
         };
+    }
+
+    @HostListener('resize-observer')
+    onResize() {
+        console.log(this.polygonAngleService.getAngleById('Right'));
     }
 }

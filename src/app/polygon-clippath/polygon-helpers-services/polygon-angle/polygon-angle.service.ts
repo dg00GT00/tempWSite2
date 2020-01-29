@@ -12,13 +12,11 @@ export class PolygonAngleService extends PolygonAbstractConfig<IPolygonConfig, n
     mapPolygonById = new Map<string, IPolygonConfig>();
 
     protected configBothSides(): number {
-        const leftAngle = this.configLeftSide();
-        const rightAngle = this.configRightSide();
         if (this.getSideAngle === ClipSide.Left) {
-            return leftAngle;
+            return this.configLeftSide();
         }
         if (this.getSideAngle === ClipSide.Right) {
-            return rightAngle;
+            return this.configRightSide();
         }
     }
 
