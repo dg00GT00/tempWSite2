@@ -1,4 +1,4 @@
-import {ClipSide, IPolygonConfig, IPolygonPoints} from '../../../models/polygon-shape.types';
+import {ClipSide, PolygonConfig, IPolygonPoints} from '../../../models/polygon-shape.types';
 import {dispatchCalculation, polygonDeepCopy} from '../../../models/polygon-shape.util';
 import {PolygonCreationService} from './polygon-creation/polygon-creation.service';
 
@@ -23,7 +23,7 @@ export class PolygonCalcClipService extends PolygonCreationService {
         this.resizeCropWidth = resizeCropWidth;
     }
 
-    protected configLeftSide(resizeConfig: IPolygonConfig): IPolygonPoints {
+    protected configLeftSide(resizeConfig: PolygonConfig): IPolygonPoints {
         const leftSide = super.configLeftSide(resizeConfig);
         if (this.resizeCropWidth) {
             return dispatchCalculation(leftSide, ClipSide.Left, this.calcLeftSide, this);
@@ -31,7 +31,7 @@ export class PolygonCalcClipService extends PolygonCreationService {
         return leftSide;
     }
 
-    protected configRightSide(resizeConfig: IPolygonConfig): IPolygonPoints {
+    protected configRightSide(resizeConfig: PolygonConfig): IPolygonPoints {
         const rightSide = super.configRightSide(resizeConfig);
         if (this.resizeCropWidth) {
             return dispatchCalculation(rightSide, ClipSide.Right, this.calcRightSide, this);
@@ -39,7 +39,7 @@ export class PolygonCalcClipService extends PolygonCreationService {
         return rightSide;
     }
 
-    protected configBothSides(resizeConfig: IPolygonConfig): IPolygonPoints {
+    protected configBothSides(resizeConfig: PolygonConfig): IPolygonPoints {
         const bothSides = super.configBothSides(resizeConfig);
         if (this.resizeCropWidth) {
             const partialPolygon = dispatchCalculation(bothSides, ClipSide.Left, this.calcLeftSide);

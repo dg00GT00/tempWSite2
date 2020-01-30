@@ -38,5 +38,8 @@ export type ClipSidePairs = CLipRightSide | ClipLeftSide;
 
 type InnerConfig = Record<keyof Omit<IConfigSides, 'degAngle'>, keyof typeof ClipCorner>;
 type RecordConfig<T> = Record<keyof typeof ClipSide, T>;
-export type IPolygonConfig<T = InnerConfig & { degAngle: number }> = Partial<RecordConfig<T> & { Both: RecordConfig<T> }>;
+
+export type PolygonConfig<T = InnerConfig & { degAngle: number }> = Partial<RecordConfig<T> & { Both: RecordConfig<T> }>;
+
+export type AngleConfig = PolygonConfig<IPolygonPoints>;
 

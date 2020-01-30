@@ -8,11 +8,12 @@ import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/
 })
 export class PhotoFrameComponent implements OnInit {
 
-    // constructor(private polygonAngleService: PolygonAngleService) {
-    // }
-
-    ngOnInit() {
+    constructor(private polygonAngleService: PolygonAngleService) {
     }
 
-
+    ngOnInit() {
+        this.polygonAngleService.getAngleById('Right').subscribe((angle: number) => {
+            console.log(angle);
+        });
+    }
 }

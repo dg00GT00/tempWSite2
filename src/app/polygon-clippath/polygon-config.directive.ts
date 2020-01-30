@@ -1,6 +1,6 @@
 import {Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {PolygonDynClipService} from './polygon-helpers-services/polygon-dyn-clip.service';
-import {IPolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonConfig} from '../../models/polygon-shape.types';
 import {PolygonCalcClipService} from './polygon-helpers-services/polygon-calc-clip.service';
 import {PolygonComponent} from './polygon.component';
 import {PolygonAngleService} from './polygon-helpers-services/polygon-angle/polygon-angle.service';
@@ -11,7 +11,7 @@ import {PolygonAngleService} from './polygon-helpers-services/polygon-angle/poly
 })
 export class PolygonConfigDirective implements OnInit, OnDestroy {
     @Input() resizeCropWidth: number;
-    @Input('appPolygonConfig') resizeConfig: IPolygonConfig = {};
+    @Input('appPolygonConfig') resizeConfig: PolygonConfig = {};
 
     constructor(
         private el: ElementRef,
@@ -22,29 +22,24 @@ export class PolygonConfigDirective implements OnInit, OnDestroy {
     ) {
     }
 
-    private getPolygonDim(): [number, number] {
-        const {offsetWidth, offsetHeight} = this.el.nativeElement;
-        return [offsetWidth, offsetHeight];
-    }
-
     // At this function, the order in which the services are called is important
     private dynPolygonConfig(): void {
-        const [offsetWidth, offsetHeight] = this.getPolygonDim();
-        this.polygonAngleService.setPolygonDim(offsetWidth, offsetHeight);
+        const {offsetWidth, offsetHeight, id} = this.el.nativeElement;
         this.polygonCalcClipService.setOffsetWidth(offsetWidth);
+        this.polygonAngleService.setAngleConfig(offsetWidth, offsetHeight);
         this.polygonDynClipService.setClipConfig(this.polygonCalcClipService, this.resizeConfig);
+        this.polygonDynClipService.setAngleId(id, this.resizeConfig);
     }
 
     ngOnInit(): void {
         this.polygonCalcClipService.setClipWidth(this.resizeCropWidth);
-        this.polygonAngleService.setIdByPolygon(this.el.nativeElement.id, this.resizeConfig);
         this.dynPolygonConfig();
     }
 
     // Discards the Map field at PolygonAngleService the component
     // being manage by this directive be destroyed
     ngOnDestroy(): void {
-        delete this.polygonAngleService.mapPolygonById;
+        this.polygonAngleService.mapPolygonById.delete(this.el.nativeElement.id);
     }
 
     @HostListener('resize-observer')
