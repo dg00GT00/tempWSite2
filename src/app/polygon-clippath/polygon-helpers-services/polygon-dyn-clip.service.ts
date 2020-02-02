@@ -12,17 +12,10 @@ export class PolygonDynClipService extends PolygonAbstractConfig<PolygonConfig, 
         super();
     }
 
-    setClipConfig(resizeConfig: PolygonAbstractConfig<PolygonConfig, IPolygonPoints>, clipConfig: PolygonConfig): void {
-        this.finalPolygon = resizeConfig.dispatchClipSides(clipConfig);
-    }
-
-    setAngleId(id: string, clipConfig: PolygonConfig): void {
+    private setAngleId(id: string, clipConfig: PolygonConfig): void {
+        // Composing the angle service
         const angleConfig = this.dispatchClipSides(clipConfig);
         this.polygonAngleService.setAngleIdMap(id, angleConfig);
-    }
-
-    buildPolygon(): string {
-        return this.polygonCreationService.buildPolygon(this.finalPolygon);
     }
 
     protected configBothSides(): AngleConfig {
@@ -35,5 +28,15 @@ export class PolygonDynClipService extends PolygonAbstractConfig<PolygonConfig, 
 
     protected configRightSide(): AngleConfig {
         return {Right: this.finalPolygon};
+    }
+
+    setClipConfig(resizeConfig: PolygonAbstractConfig<PolygonConfig, IPolygonPoints>,
+                  clipConfig: PolygonConfig, id: string): void {
+        this.finalPolygon = resizeConfig.dispatchClipSides(clipConfig);
+        this.setAngleId(id, clipConfig);
+    }
+
+    buildPolygon(): string {
+        return this.polygonCreationService.buildPolygon(this.finalPolygon);
     }
 }

@@ -22,22 +22,20 @@ export class PolygonConfigDirective implements OnInit, OnDestroy {
     ) {
     }
 
-    // At this function, the order in which the services are called is important
-    private dynPolygonConfig(): void {
+    // Within this function, the order in which the services are called is important
+    private builderPolygonConfig(): void {
         const {offsetWidth, offsetHeight, id} = this.el.nativeElement;
         this.polygonCalcClipService.setOffsetWidth(offsetWidth);
         this.polygonAngleService.setAngleConfig(offsetWidth, offsetHeight);
-        this.polygonDynClipService.setClipConfig(this.polygonCalcClipService, this.resizeConfig);
-        this.polygonDynClipService.setAngleId(id, this.resizeConfig);
+        this.polygonDynClipService.setClipConfig(this.polygonCalcClipService, this.resizeConfig, id);
     }
 
     ngOnInit(): void {
         this.polygonCalcClipService.setClipWidth(this.resizeCropWidth);
-        this.dynPolygonConfig();
+        this.builderPolygonConfig();
     }
 
-    // Discards the Map field at PolygonAngleService the component
-    // being manage by this directive be destroyed
+    // Discards the correspond key (id) from map field at PolygonAngleService the component
     ngOnDestroy(): void {
         this.polygonAngleService.mapPolygonById.delete(this.el.nativeElement.id);
     }
@@ -45,7 +43,7 @@ export class PolygonConfigDirective implements OnInit, OnDestroy {
     @HostListener('resize-observer')
     onResize(): void {
         if (this.resizeCropWidth) {
-            this.dynPolygonConfig();
+            this.builderPolygonConfig();
             this.polygonComponent.resetPolyStyle(this.polygonDynClipService.buildPolygon());
         }
     }

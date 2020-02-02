@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {PolygonAbstractConfig} from '../polygon-abstract';
 import {AngleConfig, ClipSide, IPolygonPoints} from '../../../../models/polygon-shape.types';
 import {dispatchCalculation} from '../../../../models/polygon-shape.util';
-import {Observable, of, Subject} from 'rxjs';
-import {distinctUntilChanged, filter, switchMap} from 'rxjs/operators';
+import {interval, Observable, of, Subject} from 'rxjs';
+import {audit, distinctUntilChanged, filter, switchMap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, number> {
@@ -58,14 +58,20 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
             filter(mapValue => mapValue.has(id)),
             switchMap((mapValue: Map<string, AngleConfig>) => {
                 let angle: number;
-                console.log(id, mapValue.get(id));
                 angle = this.dispatchClipSides(mapValue.get(id));
                 return angle ? of(angle) : of(0);
             }),
+            /*
+            * Applied the audit and interval observables as auxiliary function for
+            * filtering the multiple values received from the next values.
+            * Even though a properly filter observable is employed at start of
+            * observable chain, is needed do this ad hoc approach.
+            * TODO: Research for better solution on the future
+            */
+            audit(() => interval(5)),
             distinctUntilChanged()
         );
     }
-
 
     setAngleIdMap(id: string, angleConfig: AngleConfig) {
         if (id) {
