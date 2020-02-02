@@ -8,6 +8,7 @@ import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/
 })
 export class PhotoFrameComponent implements OnInit {
     @ViewChild('rotate', {static: true}) el: ElementRef;
+    angleTax = .05;
 
     constructor(private polygonAngleService: PolygonAngleService,
                 private renderer: Renderer2,
@@ -15,10 +16,10 @@ export class PhotoFrameComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.renderer.setStyle(this.el.nativeElement, 'transform-origin', 'left bottom');
-        this.polygonAngleService.getAngleById('Left').subscribe((radAngle: number) => {
-        this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${radAngle}rad)`);
-    });
+        // this.renderer.setStyle(this.el.nativeElement, 'transform-origin', 'left bottom');
+        this.polygonAngleService.getAngleById('Left').subscribe((degAngle: number) => {
+            this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${-degAngle}deg)`);
+        });
     }
 
 }

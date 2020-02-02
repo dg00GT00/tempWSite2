@@ -10,7 +10,7 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
     private getSideAngle: string;
     private offsetWith: number;
     private offsetHeight: number;
-    private subAngle = new Subject<Map<string, AngleConfig>>();
+    private subAngle = new Subject<string>();
     mapPolygonById = new Map<string, AngleConfig>();
 
     protected configBothSides(angleConfig: AngleConfig): number {
@@ -31,18 +31,18 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
     }
 
     private getLeftAngle(clipPoints: string[], polygon: IPolygonPoints): number {
-        return this.innerConfig(clipPoints, polygon, 0);
+        return this.innerConfig(clipPoints, polygon, ClipSide.Left);
     }
 
     private getRightAngle(clipPoints: string[], polygon: IPolygonPoints) {
-        return this.innerConfig(clipPoints, polygon, 100);
+        return this.innerConfig(clipPoints, polygon, ClipSide.Right);
     }
 
-    private innerConfig(clipPoints: string[], polygon: IPolygonPoints, percentageWatcher: number): number {
+    private innerConfig(clipPoints: string[], polygon: IPolygonPoints, clipSide: ClipSide): number {
         for (const point of clipPoints) {
-            if (polygon[point].x !== percentageWatcher) {
-                const oppositeSide = polygon[point].x * this.offsetWith / this.offsetHeight;
-                return Math.atan(oppositeSide);
+            const workPolygon = clipSide === 'Right' ? 100 - polygon[point].x : polygon[point].x;
+            if (workPolygon !== 0) {
+                return workPolygon * this.offsetWith / this.offsetHeight;
             }
         }
     }
@@ -55,10 +55,10 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
     getAngleById(id: string, clipSide?: ClipSide): Observable<number> {
         this.getSideAngle = clipSide;
         return this.subAngle.pipe(
-            filter(mapValue => mapValue.has(id)),
-            switchMap((mapValue: Map<string, AngleConfig>) => {
+            filter(valueId => valueId === id),
+            switchMap((valueId: string) => {
                 let angle: number;
-                angle = this.dispatchClipSides(mapValue.get(id));
+                angle = this.dispatchClipSides(this.mapPolygonById.get(valueId));
                 return angle ? of(angle) : of(0);
             }),
             /*
@@ -75,7 +75,10 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
 
     setAngleIdMap(id: string, angleConfig: AngleConfig) {
         if (id) {
-            this.subAngle.next(this.mapPolygonById.set(id, angleConfig));
+            this.mapPolygonById.set(id, angleConfig);
         }
+        // Set call the next's observable function with id,
+        // not the 'mapPolygonId' itself for the desire functionality
+        this.subAngle.next(id);
     }
 }
