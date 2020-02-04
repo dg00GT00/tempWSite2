@@ -19,7 +19,7 @@ export class MainHeaderComponent implements OnInit {
             Right: {degAngle: this.degAngle, clipCorner: 'Up'},
         };
         this.polygonConfigRight = {
-            Left: {degAngle: 87, clipCorner: 'Down'}
+            Left: {degAngle: 85, clipCorner: 'Down'}
         };
     }
 }

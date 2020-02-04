@@ -42,7 +42,8 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
         for (const point of clipPoints) {
             const workPolygon = clipSide === 'Right' ? 100 - polygon[point].x : polygon[point].x;
             if (workPolygon !== 0) {
-                return workPolygon * this.offsetWith / this.offsetHeight;
+                const ratio = workPolygon * this.offsetWith / this.offsetHeight;
+                return Math.atan(ratio);
             }
         }
     }
@@ -61,14 +62,6 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
                 angle = this.dispatchClipSides(this.mapPolygonById.get(valueId));
                 return angle ? of(angle) : of(0);
             }),
-            /*
-            * Applied the audit and interval observables as auxiliary function for
-            * filtering the multiple values received from the next values.
-            * Even though a properly filter observable is employed at start of
-            * observable chain, is needed do this ad hoc approach.
-            * TODO: Research for better solution on the future
-            */
-            audit(() => interval(5)),
             distinctUntilChanged()
         );
     }
