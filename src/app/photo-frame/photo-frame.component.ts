@@ -8,7 +8,6 @@ import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/
 })
 export class PhotoFrameComponent implements OnInit {
     @ViewChild('rotate', {static: true}) el: ElementRef;
-    angleTax = .001;
 
     constructor(private polygonAngleService: PolygonAngleService,
                 private renderer: Renderer2,
@@ -16,40 +15,10 @@ export class PhotoFrameComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.renderer.setStyle(this.el.nativeElement, 'transform-origin', 'left bottom');
-        const angle = this.helperAngle(.000353);
-        this.polygonAngleService.getAngleById('left-clip').subscribe((radAngle: number) => {
-            // radAngle *= this.angleTax;
-            const angleResult = angle(radAngle);
-            this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${-angleResult}rad)`);
-            console.log(angleResult);
-            // this.angleTax += .000353;
+        this.polygonAngleService.getAngleById('left-clip').subscribe((degAngle: number) => {
+            // The gotten angle should be divided for a tax to keep the right inclination
+            // on the component that bas being observable
+            this.renderer.setStyle(this.el.nativeElement, 'transform', `rotate(${-degAngle / 1.85}deg)`);
         });
     }
-
-    private helperAngle(increaseFactor: number): (radAngle: number) => number {
-        let oldAngle = 0;
-        let returnAngle = 0;
-
-        function innerFunc(radAngle: number): number {
-            if (radAngle > oldAngle) {
-                oldAngle = radAngle;
-                radAngle *= this.angleTax;
-                this.angleTax += increaseFactor;
-                returnAngle = radAngle;
-                return radAngle;
-            }
-            if (radAngle < oldAngle) {
-                oldAngle = radAngle;
-                this.angleTax -= increaseFactor;
-                radAngle *= this.angleTax;
-                returnAngle = radAngle;
-                return radAngle;
-            }
-            return returnAngle;
-        }
-
-        return innerFunc.bind(this);
-    }
-
 }

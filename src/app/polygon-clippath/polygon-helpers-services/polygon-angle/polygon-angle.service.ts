@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {PolygonAbstractConfig} from '../polygon-abstract';
 import {AngleConfig, ClipSide, IPolygonPoints} from '../../../../models/polygon-shape.types';
 import {dispatchCalculation} from '../../../../models/polygon-shape.util';
-import {interval, Observable, of, Subject} from 'rxjs';
-import {audit, distinctUntilChanged, filter, switchMap} from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {distinctUntilChanged, filter, switchMap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, number> {
@@ -42,8 +42,12 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
         for (const point of clipPoints) {
             const workPolygon = clipSide === 'Right' ? 100 - polygon[point].x : polygon[point].x;
             if (workPolygon !== 0) {
-                const ratio = workPolygon * this.offsetWith / this.offsetHeight;
-                return Math.atan(ratio);
+                /*
+                * Even though the delivered result of this function doesn't correspond to the real
+                * trigonometric algebra for calculation of the arc tangent of a given angle, this
+                * approach presents better results
+                */
+                return workPolygon * this.offsetWith / this.offsetHeight;
             }
         }
     }
