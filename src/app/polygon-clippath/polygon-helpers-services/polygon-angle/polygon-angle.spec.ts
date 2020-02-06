@@ -1,41 +1,51 @@
-import {TestBed} from '@angular/core/testing';
-import {PolygonCreationService} from '../polygon-creation/polygon-creation.service';
 import {PolygonAngleService} from './polygon-angle.service';
-import {mockPolygon} from '../polygon.mock';
-import {ClipSide} from '../../../../models/polygon-shape.types';
+import {mockAngleConfig, MockAngleService} from '../polygon.mock';
+import {TestBed} from '@angular/core/testing';
+import {AngleConfig} from '../../../../models/polygon-shape.types';
+import {BehaviorSubject} from 'rxjs';
 
-describe('A polygon', () => {
-    let polygonAngle: PolygonAngleService;
-    let polygonCreation: PolygonCreationService;
-    const {left, right, both} = mockPolygon;
+describe('The polygon angle', () => {
+    let polygonAngle: MockAngleService;
+    const TEST_ID = 'test-id';
+    const {left: leftPolygon, right: rightPolygon, both: bothPolygon} = mockAngleConfig;
+    const angleConfigArray = [leftPolygon, rightPolygon, bothPolygon];
 
     beforeEach(() => {
-        TestBed.configureTestingModule({providers: [PolygonCreationService]});
+        TestBed.configureTestingModule({providers: [MockAngleService]});
         polygonAngle = TestBed.get(PolygonAngleService);
-        polygonCreation = TestBed.get(PolygonCreationService);
+        polygonAngle.setAngleConfig(500, 500);
+
     });
+    describe('should have a field property with a map object assigned', () => {
+        let mapPolygonById: Map<string, AngleConfig>;
+        beforeEach(() => {
+            mapPolygonById = polygonAngle.mapPolygonById;
+        });
 
-    it('with right clip side should have degAngle', () => {
-        polygonCreation.dispatchClipSides(right);
-        expect(polygonAngle.dispatchClipSides(right)).toBe(polygonCreation.getCurrentRadAngle());
-    });
+        angleConfigArray.forEach(polygon => {
+            it('and an id\'s key set in which corresponds to the html id property', () => {
+                polygonAngle.setAngleIdMap(TEST_ID, polygon);
+                expect(mapPolygonById.get(TEST_ID)).toEqual(polygon);
+            });
+        });
 
-    it('with left clip side should have degAngle', () => {
-        polygonCreation.dispatchClipSides(left);
-        expect(polygonAngle.dispatchClipSides(left)).toBe(polygonCreation.getCurrentRadAngle());
-    });
+        describe('that its values is emitted when the respective id is passed in on proper function', () => {
+            let count = 0;
+            beforeEach(() => {
+                polygonAngle.subAngle = new BehaviorSubject<string>(TEST_ID);
+                polygonAngle.setAngleIdMap(TEST_ID, angleConfigArray[count]);
+            });
 
-    describe('with both clip sides', () => {
-        // Spy function for simulating the selection by class name of a HTML element which contains the clipPath style property
-        // This function have the class name and ClipSide as arguments
-        // The real implementation for this function will be tested on the consumer of this service
-        const spyGetClipSide = jasmine.createSpyObj('spyGetClipSide', ['setSide']);
+            afterEach(() => {
+                count++;
+            });
 
-        ['Left', 'Right'].forEach(side => {
-            it(`when took the ${side.toLowerCase()} side for getting the clip angle, should return a degAngle value`, () => {
-                polygonCreation.dispatchClipSides(both);
-                spyGetClipSide.setSide.withArgs('testCSSClass', ClipSide[side]).and.returnValue(polygonCreation.getCurrentRadAngle());
-                expect(spyGetClipSide.setSide('testCSSClass', ClipSide[side])).toBe(polygonAngle.dispatchClipSides(both));
+            angleConfigArray.forEach(_ => {
+                it('should emit the correspondent angle to the respective side', () => {
+                    polygonAngle.getAngleById(TEST_ID).subscribe(angle => {
+                        expect(angle).toEqual(jasmine.any(Number));
+                    });
+                });
             });
         });
     });

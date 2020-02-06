@@ -10,7 +10,7 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
     private getSideAngle: string;
     private offsetWith: number;
     private offsetHeight: number;
-    private subAngle = new Subject<string>();
+    private subjectAngle = new Subject<string>();
     mapPolygonById = new Map<string, AngleConfig>();
 
     protected configBothSides(angleConfig: AngleConfig): number {
@@ -77,5 +77,13 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
         // Set call the next's observable function with id,
         // not the 'mapPolygonId' itself for the desire functionality
         this.subAngle.next(id);
+    }
+
+    get subAngle(): Subject<string> {
+        return this.subjectAngle;
+    }
+
+    set subAngle(value: Subject<string>) {
+        this.subjectAngle = value;
     }
 }
