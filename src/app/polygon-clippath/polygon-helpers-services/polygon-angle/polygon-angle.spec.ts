@@ -12,7 +12,7 @@ describe('The polygon angle', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({providers: [MockAngleService]});
-        polygonAngle = TestBed.get(PolygonAngleService);
+        polygonAngle = TestBed.inject(PolygonAngleService);
         polygonAngle.setAngleConfig(500, 500);
 
     });

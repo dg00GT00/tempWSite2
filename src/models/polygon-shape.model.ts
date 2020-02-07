@@ -39,7 +39,6 @@ export class PolygonShape {
 
 export class ClipPathConfig {
     private xOffset: number;
-    private radAngle: number;
 
     constructor(degreeAngle: number) {
         this.angleToOffsetX(degreeAngle);
@@ -81,6 +80,7 @@ export class ClipPathConfig {
         return clipSidePairs;
     }
 
+    // noinspection JSMethodCanBeStatic
     private setClipSide(clipSide: ClipSide): ClipSidePairs {
         switch (clipSide) {
             case ClipSide.Left:

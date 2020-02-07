@@ -3,7 +3,9 @@ import {AngleConfig, ClipCorner, ClipSide, IPolygonPoints, PolygonConfig} from '
 import {ClipPathConfig} from '../../../models/polygon-shape.model';
 import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
 import {Subject} from 'rxjs';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 export class MockCreationPolygon extends PolygonCreationService {
     mockPolygonCreation(degAngle: number, clipSide: ClipSide): IPolygonPoints {
         const config = new ClipPathConfig(degAngle);
@@ -12,6 +14,7 @@ export class MockCreationPolygon extends PolygonCreationService {
     }
 }
 
+@Injectable()
 export class MockAngleService extends PolygonAngleService {
     set subAngle(subAngle: Subject<string>) {
         super.subAngle = subAngle;

@@ -1,9 +1,11 @@
-import {ClipSide, PolygonConfig, IPolygonPoints} from '../../../models/polygon-shape.types';
+import {ClipSide, IPolygonPoints, PolygonConfig} from '../../../models/polygon-shape.types';
 import {dispatchCalculation, polygonDeepCopy} from '../../../models/polygon-shape.util';
 import {PolygonCreationService} from './polygon-creation/polygon-creation.service';
+import {Injectable} from '@angular/core';
 
 // This service doesn't need the @Injectable decorator because
 // it inherit from a service that implement it
+@Injectable()
 export class PolygonCalcClipService extends PolygonCreationService {
     /*
      The current width of the component being observed

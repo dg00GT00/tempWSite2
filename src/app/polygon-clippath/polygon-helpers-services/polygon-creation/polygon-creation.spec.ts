@@ -2,7 +2,6 @@ import {ClipSide} from '../../../../models/polygon-shape.types';
 import {PolygonShape} from '../../../../models/polygon-shape.model';
 import {MockCreationPolygon, mockResizeConfig} from '../polygon.mock';
 import {TestBed} from '@angular/core/testing';
-import {PolygonCreationService} from './polygon-creation.service';
 
 describe('A created polygon', () => {
     let testCreationPolygon: MockCreationPolygon;
@@ -10,11 +9,9 @@ describe('A created polygon', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
-                {provide: PolygonCreationService, useClass: MockCreationPolygon}
-            ]
+            providers: [MockCreationPolygon]
         });
-        testCreationPolygon = TestBed.get(PolygonCreationService);
+        testCreationPolygon = TestBed.inject(MockCreationPolygon);
     });
 
     it('should clip only the rightConfig side', () => {

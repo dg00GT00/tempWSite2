@@ -6,7 +6,7 @@ import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
 
 @Injectable()
 export class PolygonDynClipService extends PolygonAbstractConfig<PolygonConfig, AngleConfig> {
-    private finalPolygon: IPolygonPoints;
+    private fPolygon: IPolygonPoints;
 
     constructor(private polygonCreationService: PolygonCreationService, private polygonAngleService: PolygonAngleService) {
         super();
@@ -34,6 +34,14 @@ export class PolygonDynClipService extends PolygonAbstractConfig<PolygonConfig, 
                   clipConfig: PolygonConfig, id: string): void {
         this.finalPolygon = resizeConfig.dispatchClipSides(clipConfig);
         this.setAngleId(id, clipConfig);
+    }
+
+    get finalPolygon(): IPolygonPoints {
+        return this.fPolygon;
+    }
+
+    set finalPolygon(value: IPolygonPoints) {
+        this.fPolygon = value;
     }
 
     buildPolygon(): string {
