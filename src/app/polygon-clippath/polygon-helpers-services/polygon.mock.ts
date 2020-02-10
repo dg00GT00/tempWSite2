@@ -2,11 +2,12 @@ import {PolygonCreationService} from './polygon-creation/polygon-creation.servic
 import {AngleConfig, ClipCorner, ClipSide, IPolygonPoints, PolygonConfig} from '../../../models/polygon-shape.types';
 import {ClipPathConfig} from '../../../models/polygon-shape.model';
 import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
-import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class MockCreationPolygon extends PolygonCreationService {
+    // This function is used only at PolygonCreationService test file
     mockPolygonCreation(degAngle: number, clipSide: ClipSide): IPolygonPoints {
         const config = new ClipPathConfig(degAngle);
         const polygon = config.clipConfig(clipSide, ClipCorner.Up);
@@ -21,7 +22,13 @@ export class MockAngleService extends PolygonAngleService {
     }
 }
 
-export const mockResizeConfig: { [idx: string]: PolygonConfig } = {
+interface MockPolygonResult<T> {
+    right: T;
+    left: T;
+    both: T;
+}
+
+export const mockResizeConfig: MockPolygonResult<PolygonConfig> = {
     right: {Right: {degAngle: 10, clipCorner: 'Up'}},
     left: {Left: {degAngle: 11, clipCorner: 'Up'}},
     both: {Both: {Left: {degAngle: 12, clipCorner: 'Up'}, Right: {degAngle: 13, clipCorner: 'Up'}}}
@@ -29,13 +36,13 @@ export const mockResizeConfig: { [idx: string]: PolygonConfig } = {
 
 const mockPolygon = new MockCreationPolygon();
 
-export const mockAngleConfig: { [idx: string]: AngleConfig } = {
+export const mockAngleConfig: MockPolygonResult<AngleConfig> = {
     right: {Right: mockPolygon.dispatchClipSides(mockResizeConfig.right)},
     left: {Left: mockPolygon.dispatchClipSides(mockResizeConfig.left)},
     both: {
         Both: {
-            Left: mockPolygon.dispatchClipSides(mockResizeConfig.Both),
-            Right: mockPolygon.dispatchClipSides(mockResizeConfig.Both),
+            Left: mockPolygon.dispatchClipSides(mockResizeConfig.both),
+            Right: mockPolygon.dispatchClipSides(mockResizeConfig.both),
         }
     }
 };

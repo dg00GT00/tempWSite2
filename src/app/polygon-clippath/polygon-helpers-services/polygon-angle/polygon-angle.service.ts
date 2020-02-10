@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {PolygonAbstractConfig} from '../polygon-abstract';
+import {PolygonAbstractConfig} from '../polygon.abstract';
 import {AngleConfig, ClipSide, IPolygonPoints} from '../../../../models/polygon-shape.types';
 import {dispatchCalculation} from '../../../../models/polygon-shape.util';
 import {Observable, of, Subject} from 'rxjs';

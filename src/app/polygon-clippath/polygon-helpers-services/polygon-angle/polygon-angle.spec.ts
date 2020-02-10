@@ -40,13 +40,14 @@ describe('The polygon angle', () => {
                 count++;
             });
 
-            angleConfigArray.forEach(_ => {
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < angleConfigArray.length; i++) {
                 it('should emit the correspondent angle to the respective side', () => {
                     polygonAngle.getAngleById(TEST_ID).subscribe(angle => {
                         expect(angle).toEqual(jasmine.any(Number));
                     });
                 });
-            });
+            }
         });
     });
 });
