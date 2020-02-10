@@ -9,16 +9,16 @@ export class ResizeObserverEventService {
         return /resize-observer/.test(eventName);
     }
 
-    addEventListener(element: HTMLElement, eventName: string, handler: (event: any) => void): () => void {
-        let resizeObserver: any;
+    addEventListener(element: HTMLElement, eventName: string, handler: (event: ResizeObserverEntry) => void): () => void {
+        let resizeObserver: ResizeObserver;
         this.manager.getZone().runOutsideAngular(() => {
-            const entryRepass = entry => handler(entry);
-            // @ts-ignore
-            resizeObserver = new ResizeObserver((entries: any[]) => {
+            const entryPass = (entry: ResizeObserverEntry) => handler(entry);
+            resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
                 for (const entry of entries) {
-                    entryRepass(entry);
+                    entryPass(entry);
                 }
-            }).observe(element);
+            });
+            resizeObserver.observe(element);
         });
         return () => {
             resizeObserver.unobserve(element);
