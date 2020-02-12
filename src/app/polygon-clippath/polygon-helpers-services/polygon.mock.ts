@@ -4,6 +4,7 @@ import {ClipPathConfig} from '../../../models/polygon-shape.model';
 import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
+import {PolygonDynClipService} from './polygon-dyn/polygon-dyn-clip.service';
 
 @Injectable()
 export class MockCreationPolygon extends PolygonCreationService {
@@ -28,21 +29,27 @@ interface MockPolygonResult<T> {
     both: T;
 }
 
+const mockPolygon = new MockCreationPolygon();
+
 export const mockResizeConfig: MockPolygonResult<PolygonConfig> = {
     right: {Right: {degAngle: 10, clipCorner: 'Up'}},
     left: {Left: {degAngle: 11, clipCorner: 'Up'}},
     both: {Both: {Left: {degAngle: 12, clipCorner: 'Up'}, Right: {degAngle: 13, clipCorner: 'Up'}}}
 };
 
-const mockPolygon = new MockCreationPolygon();
+export const mockPolygonPoints: MockPolygonResult<IPolygonPoints> = {
+    right: mockPolygon.dispatchClipSides(mockResizeConfig.right),
+    left: mockPolygon.dispatchClipSides(mockResizeConfig.left),
+    both: mockPolygon.dispatchClipSides(mockResizeConfig.both),
+};
 
 export const mockAngleConfig: MockPolygonResult<AngleConfig> = {
-    right: {Right: mockPolygon.dispatchClipSides(mockResizeConfig.right)},
-    left: {Left: mockPolygon.dispatchClipSides(mockResizeConfig.left)},
+    right: {Right: mockPolygonPoints.right},
+    left: {Left: mockPolygonPoints.left},
     both: {
         Both: {
-            Left: mockPolygon.dispatchClipSides(mockResizeConfig.both),
-            Right: mockPolygon.dispatchClipSides(mockResizeConfig.both),
+            Left: mockPolygonPoints.both,
+            Right: mockPolygonPoints.both,
         }
     }
 };
