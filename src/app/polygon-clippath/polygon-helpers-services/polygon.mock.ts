@@ -4,7 +4,6 @@ import {ClipPathConfig} from '../../../models/polygon-shape.model';
 import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {PolygonDynClipService} from './polygon-dyn/polygon-dyn-clip.service';
 
 @Injectable()
 export class MockCreationPolygon extends PolygonCreationService {
