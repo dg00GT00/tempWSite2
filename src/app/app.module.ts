@@ -20,6 +20,9 @@ import {PhotoFrameComponent} from './photo-frame/photo-frame.component';
         BrowserModule
     ],
     providers: [{provide: EVENT_MANAGER_PLUGINS, useClass: ResizeObserverEventService, multi: true}],
+    exports: [
+        PolygonConfigDirective,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
