@@ -1,3 +1,4 @@
+// Test module suspended. See note on polygon-config.directive.spec.ts file
 import {
     AfterViewInit,
     ChangeDetectorRef,
@@ -21,7 +22,7 @@ class PolygonConfigStub {
     constructor(public polygonConfig: PolygonConfig) {
     }
 }
-
+// TODO: Confirm if the template in the test component supports any kind of view projection
 @Component({
     template: `
         <ng-container #vc></ng-container>
@@ -60,5 +61,5 @@ export class PolygonStubComponent implements AfterViewInit {
     ],
     providers: [{provide: PolygonComponent, useClass: PolygonStubComponent}]
 })
-export class TestingModule {
+export class TestDirectiveModule {
 }
