@@ -1,1 +1,7 @@
-<div #rotate class="main-photo"></div>
+<ng-container #vc></ng-container>
+<ng-template *ngFor="let stripe of stripes">
+    <div class="photo-stripe_{{stripe}}"></div>
+</ng-template>
+<ng-template>
+    <div class="main-photo"></div>
+</ng-template>
