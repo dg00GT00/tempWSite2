@@ -1,4 +1,4 @@
-div {
+app-main-header {
     display: flex;
     justify-content: space-between;
     height: 100vh;
@@ -11,14 +11,21 @@ div {
         }
     }
 
-    .main-division {
-        flex: 0.5 0 10%;
-
-        app-photo-frame {
-            flex: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    @for $stripe from 0 through 1 {
+        .photo-stripe_#{$stripe} {
+            position: absolute;
+            flex: none;
+            background-color: black;
+            height: 100%;
+            width: 4%;
+            z-index: 1;
+            @if $stripe == 0 {
+                transform-origin: bottom left;
+                left: 58%;
+            } @else if $stripe == 1 {
+                transform-origin: top right;
+                right: 11.6%;
+            }
         }
     }
 
@@ -29,4 +36,11 @@ div {
             background-color: red;
         }
     }
+}
+
+app-photo-frame {
+    flex-basis: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,9 +1,11 @@
-<div>
-    <app-polygon id="left-clip" class="left-polygon" [appPolygonConfig]="polygonConfigLeft"
-                 [resizeCropWidth]="cropWidthRight"></app-polygon>
-    <div class="main-division">
-        <app-photo-frame></app-photo-frame>
-    </div>
-    <app-polygon id="right-clip" class="right-polygon" [appPolygonConfig]="polygonConfigRight"
-                 [resizeCropWidth]="cropWidthLeft"></app-polygon>
-</div>
+<app-polygon id="left-clip" class="left-polygon" [appPolygonConfig]="polygonConfigLeft"
+             [resizeCropWidth]="cropWidthRight"></app-polygon>
+<ng-container #vc></ng-container>
+<ng-template *ngFor="let stripe of stripes">
+    <app-photo-stripe class="photo-stripe_{{stripe}}"></app-photo-stripe>
+</ng-template>
+<ng-template>
+    <app-photo-frame></app-photo-frame>
+</ng-template>
+<app-polygon id="right-clip" class="right-polygon" [appPolygonConfig]="polygonConfigRight"
+             [resizeCropWidth]="cropWidthLeft"></app-polygon>
