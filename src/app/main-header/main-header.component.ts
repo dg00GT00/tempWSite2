@@ -61,7 +61,7 @@ export class MainHeaderComponent implements OnInit, AfterViewInit {
         this.viewRefArray.forEach(viewRef => {
             // The gotten angle should be divided for a tax to keep the right inclination
             this.polygonAngleService.getAngleById('left-clip').subscribe((degAngle: number) => {
-            // on the component that bas being observable
+                // on the component that bas being observable
                 // Got the first and only node on the rootNodes array
                 const htmlElement: HTMLElement[] = viewRef.rootNodes;
                 const dynValue = degAngle / this.correctionTax;

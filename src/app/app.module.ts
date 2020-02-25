@@ -9,6 +9,7 @@ import {MainHeaderComponent} from './main-header/main-header.component';
 import {PhotoFrameComponent} from './photo-frame/photo-frame.component';
 import {PhotoStripeComponent} from './photo-frame/photo-stripe/photo-stripe.component';
 import {MainBodyComponent} from './main-body/main-body.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {MainBodyComponent} from './main-body/main-body.component';
         MainBodyComponent,
     ],
     imports: [
-        BrowserModule
+        BrowserModule,
+        BrowserAnimationsModule
     ],
     providers: [{provide: EVENT_MANAGER_PLUGINS, useClass: ResizeObserverEventService, multi: true}],
     exports: [
