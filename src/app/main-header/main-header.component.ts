@@ -30,7 +30,7 @@ export class MainHeaderComponent implements OnInit, AfterViewInit {
     polygonConfigRight: PolygonConfig;
     stripes = [...Array(2).keys()];
     cropWidthRight = 700;
-    cropWidthLeft = 140;
+    cropWidthLeft = 162.5;
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
@@ -66,7 +66,7 @@ export class MainHeaderComponent implements OnInit, AfterViewInit {
             Right: {degAngle: 18.4, clipCorner: 'Up'},
         };
         this.polygonConfigRight = {
-            Left: {degAngle: 85, clipCorner: 'Down'}
+            Left: {degAngle: 81, clipCorner: 'Down'}
         };
     }
 

@@ -3,7 +3,7 @@ import {PolygonDynClipService} from './polygon-helpers-services/polygon-dyn/poly
 
 @Component({
     selector: 'app-polygon',
-    template: `<div [ngStyle]="polygonStyle"></div>`,
+    template: `<div [ngStyle]="polygonStyle"><ng-content></ng-content></div>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolygonComponent implements AfterViewInit {

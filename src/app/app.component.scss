@@ -1,11 +1,11 @@
 app-main-body {
-    position: absolute;
     z-index: 1;
+    background-color: aqua;
 }
 
 app-main-header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 50% 4% 30% 4% 1fr;
     height: 100vh;
 }
 
