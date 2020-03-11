@@ -1,4 +1,4 @@
-import {PolygonConfig} from '../../../models/polygon-shape.types';
+import {PolygonConfig} from '../models/polygon-shape.types';
 
 type TConfig<T, K = keyof T> = K extends keyof PolygonConfig ? T : null;
 

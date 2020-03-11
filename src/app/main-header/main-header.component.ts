@@ -12,7 +12,7 @@ import {
     ViewContainerRef,
     ViewEncapsulation
 } from '@angular/core';
-import {PolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonConfig} from '../polygon-clippath/models/polygon-shape.types';
 import {PolygonAngleService} from '../polygon-clippath/polygon-helpers-services/polygon-angle/polygon-angle.service';
 
 @Component({

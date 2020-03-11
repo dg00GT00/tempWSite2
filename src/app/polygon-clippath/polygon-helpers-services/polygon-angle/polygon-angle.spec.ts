@@ -1,7 +1,7 @@
 import {PolygonAngleService} from './polygon-angle.service';
 import {mockAngleConfig, MockAngleService} from '../polygon.mock';
 import {TestBed} from '@angular/core/testing';
-import {AngleConfig} from '../../../../models/polygon-shape.types';
+import {AngleConfig} from '../../models/polygon-shape.types';
 import {BehaviorSubject} from 'rxjs';
 
 describe('The polygon angle', () => {

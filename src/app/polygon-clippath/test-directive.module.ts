@@ -12,7 +12,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonConfig} from './models/polygon-shape.types';
 import {mockResizeConfig} from './polygon-helpers-services/polygon.mock';
 import {AppModule} from '../app.module';
 import {PolygonComponent} from './polygon.component';

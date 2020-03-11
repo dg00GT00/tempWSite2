@@ -1,5 +1,5 @@
-import {ClipSide} from '../../../../models/polygon-shape.types';
-import {PolygonShape} from '../../../../models/polygon-shape.model';
+import {ClipSide} from '../../models/polygon-shape.types';
+import {PolygonShape} from '../../models/polygon-shape.model';
 import {MockCreationPolygon, mockResizeConfig} from '../polygon.mock';
 import {TestBed} from '@angular/core/testing';
 

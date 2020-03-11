@@ -1,5 +1,5 @@
-import {ClipSide, IPolygonPoints, PolygonConfig} from '../../../models/polygon-shape.types';
-import {dispatchCalculation, polygonDeepCopy} from '../../../models/polygon-shape.util';
+import {ClipSide, IPolygonPoints, PolygonConfig} from '../models/polygon-shape.types';
+import {dispatchCalculation, polygonDeepCopy} from '../models/polygon-shape.util';
 import {PolygonCreationService} from './polygon-creation/polygon-creation.service';
 import {Injectable} from '@angular/core';
 

@@ -94,6 +94,7 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "src/material-custom-styles.scss",
                             "src/styles.scss"
                         ],
                         "scripts": []

@@ -1,0 +1,68 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+$mat-teal-override: (
+    primary-light: #9effff,
+    primary-dark: #14cba8
+);
+
+$mat-teal-override: map-merge($mat-teal, $mat-teal-override);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$primary-lighter: mat-palette($mat-teal-override, A200, primary-light, primary-dark);
+$primary-accent: mat-palette($mat-cyan, A700, A400, 900);
+
+// The warn palette is optional (defaults to red).
+$primary-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$samplePlace-theme-lighter: mat-light-theme($primary-lighter, $primary-accent, $primary-warn);
+
+
+$primary-darker: mat-palette($mat-teal, A400, A300, 900);
+$primary-darker-accent: mat-palette($mat-cyan, A600, A200, 800);
+$primary-darker-warn: mat-palette($mat-red, 800);
+
+$samplePlace-theme-darker: mat-dark-theme($primary-darker, $primary-darker-accent, $primary-darker-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+@mixin mat-icon-theme($theme, $hue: darker) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .mat-icon {
+        &.mat-primary {
+            color: mat-color($primary, $hue);
+        }
+
+        &.mat-accent {
+            color: mat-color($accent, $hue);
+        }
+
+        &.mat-warn {
+            color: mat-color($warn, $hue);
+        }
+    }
+}
+
+@include angular-material-theme($samplePlace-theme-lighter);
+@include mat-icon-theme($samplePlace-theme-lighter);
+
+.darker-theme {
+    @include angular-material-theme($samplePlace-theme-darker);
+    @include mat-icon-theme($samplePlace-theme-darker, default);
+}

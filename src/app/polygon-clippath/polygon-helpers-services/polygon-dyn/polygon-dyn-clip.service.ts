@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngleConfig, IPolygonPoints, PolygonConfig} from '../../../../models/polygon-shape.types';
+import {AngleConfig, IPolygonPoints, PolygonConfig} from '../../models/polygon-shape.types';
 import {PolygonCreationService} from '../polygon-creation/polygon-creation.service';
 import {PolygonAbstractConfig} from '../polygon.abstract';
 import {PolygonAngleService} from '../polygon-angle/polygon-angle.service';

@@ -10,6 +10,10 @@ import {PhotoFrameComponent} from './photo-frame/photo-frame.component';
 import {PhotoStripeComponent} from './photo-frame/photo-stripe/photo-stripe.component';
 import {MainBodyComponent} from './main-body/main-body.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarouselPhotoComponent} from './carousel-photo/carousel-photo.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {CarouselPhotoDirective} from './carousel-photo/carousel-photo.directive';
 
 @NgModule({
     declarations: [
@@ -20,10 +24,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         PhotoFrameComponent,
         PhotoStripeComponent,
         MainBodyComponent,
+        CarouselPhotoComponent,
+        CarouselPhotoDirective,
     ],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatButtonModule
     ],
     providers: [{provide: EVENT_MANAGER_PLUGINS, useClass: ResizeObserverEventService, multi: true}],
     exports: [

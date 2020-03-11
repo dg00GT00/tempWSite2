@@ -1,6 +1,6 @@
 import {PolygonCreationService} from './polygon-creation/polygon-creation.service';
-import {AngleConfig, ClipCorner, ClipSide, IPolygonPoints, PolygonConfig} from '../../../models/polygon-shape.types';
-import {ClipPathConfig} from '../../../models/polygon-shape.model';
+import {AngleConfig, ClipCorner, ClipSide, IPolygonPoints, PolygonConfig} from '../models/polygon-shape.types';
+import {ClipPathConfig} from '../models/polygon-shape.model';
 import {PolygonAngleService} from './polygon-angle/polygon-angle.service';
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';

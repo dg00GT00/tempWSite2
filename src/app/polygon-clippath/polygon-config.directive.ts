@@ -1,6 +1,6 @@
 import {Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {PolygonDynClipService} from './polygon-helpers-services/polygon-dyn/polygon-dyn-clip.service';
-import {PolygonConfig} from '../../models/polygon-shape.types';
+import {PolygonConfig} from './models/polygon-shape.types';
 import {PolygonCalcClipService} from './polygon-helpers-services/polygon-calc-clip.service';
 import {PolygonComponent} from './polygon.component';
 import {PolygonAngleService} from './polygon-helpers-services/polygon-angle/polygon-angle.service';
