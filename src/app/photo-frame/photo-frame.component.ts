@@ -1,11 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-photo-frame',
-    templateUrl: './photo-frame.component.html',
-    styleUrls: ['./photo-frame.component.scss']
+    template: `
+        <div class="main-photo">
+            {{photo}}
+        </div>`,
+    styles: [`
+        .main-photo {
+            background-color: green;
+            height: 85%;
+            width: inherit;
+        }`
+    ]
 })
 export class PhotoFrameComponent implements OnInit {
+    @Input() photo: string;
+
     ngOnInit(): void {
 
     }

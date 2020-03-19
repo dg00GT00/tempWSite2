@@ -47,7 +47,7 @@ export class MainHeaderComponent implements OnInit, AfterViewInit {
             const htmlElement: HTMLElement[] = viewRef.rootNodes;
             const dynValue = degAngle / this.correctionTax;
             const value = `rotate(${-dynValue}deg) scale(1, 1.009) skewY(${dynValue}deg`;
-            if (RegExp(/[01]/).test(htmlElement[0].className)) {
+            if (RegExp(/\d/).test(htmlElement[0].className)) {
                 this.renderer.setStyle(htmlElement[0], 'transform', value);
                 htmlElement[0].childNodes.forEach(childNode => {
                     // Is needed skip a comment element that comes from ng-container

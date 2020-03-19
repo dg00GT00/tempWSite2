@@ -9,7 +9,9 @@ export class CarouselPhotoDirective implements OnInit {
     private context: ICarouselContext;
     private index = 0;
 
-    constructor(private templateRef: TemplateRef<ICarouselContext>, private viewContainerRef: ViewContainerRef) {
+    constructor(private templateRef: TemplateRef<ICarouselContext>,
+                private viewContainerRef: ViewContainerRef,
+    ) {
     }
 
     ngOnInit(): void {
@@ -18,7 +20,6 @@ export class CarouselPhotoDirective implements OnInit {
             controller: {
                 nextPhoto: () => this.nextPhoto(),
                 prevPhoto: () => this.prevPhoto(),
-
             }
         };
         this.viewContainerRef.createEmbeddedView(this.templateRef, this.context);
