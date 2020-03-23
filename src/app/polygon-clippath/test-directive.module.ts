@@ -26,7 +26,7 @@ class PolygonConfigStub {
 @Component({
     template: `
         <ng-container #vc></ng-container>
-        <ng-template *ngFor="let _ of array" [appPolygonConfig]="polygonConfig"></ng-template>`,
+        <ng-template *ngFor="let _ of array" [polygonConfig]="polygonConfig"></ng-template>`,
     providers: [{provide: PolygonConfigStub, useFactory: () => new PolygonConfigStub(mockResizeConfig.right)}],
 })
 export class PolygonStubComponent implements AfterViewInit {

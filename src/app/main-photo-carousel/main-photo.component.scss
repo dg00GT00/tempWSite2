@@ -1,0 +1,11 @@
+main-photo {
+    $photo-frame-position-tax: 4.4%;
+    display: flex;
+    width: 100% + 2 * $photo-frame-position-tax;
+    right: $photo-frame-position-tax;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    height: 85%;
+}

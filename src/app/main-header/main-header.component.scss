@@ -4,37 +4,8 @@
     }
 }
 
-@for $stripe from 0 through 1 {
-    $stripe-position: 5.5%;
-    .photo-stripe_#{$stripe} {
-        display: flex;
-        z-index: 1;
-        position: relative;
-        flex-direction: column;
-        background-color: black;
-        height: 100%;
-        @if $stripe == 0 {
-            right: $stripe-position;
-            transform-origin: bottom left;
-        } @else if $stripe == 1 {
-            left: $stripe-position;
-            transform-origin: top right;
-        }
-    }
-}
-
 .right-polygon {
     div {
         background-color: red;
     }
-}
-
-app-photo-frame {
-    $photo-frame-position-tax: 4.4%;
-    display: flex;
-    width: 100% + 2 * $photo-frame-position-tax;
-    right: $photo-frame-position-tax;
-    position: relative;
-    align-items: center;
-    justify-content: center;
 }

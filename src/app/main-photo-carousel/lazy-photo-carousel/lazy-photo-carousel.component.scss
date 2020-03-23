@@ -1,0 +1,23 @@
+@for $stripe from 0 through 1 {
+    $stripe-position: 5.5%;
+    .photo-stripe_#{$stripe} {
+        display: flex;
+        z-index: 1;
+        position: relative;
+        flex-direction: column;
+        background-color: black;
+        height: 100%;
+        @if $stripe == 0 {
+            right: $stripe-position;
+            transform-origin: bottom left;
+        } @else if $stripe == 1 {
+            left: $stripe-position;
+            transform-origin: top right;
+        }
+    }
+}
+
+:host {
+    display: grid;
+    grid-template-columns: 1fr 80% 1fr;
+}

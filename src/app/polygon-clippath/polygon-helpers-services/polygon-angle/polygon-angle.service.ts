@@ -34,7 +34,7 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
         return this.innerConfig(clipPoints, polygon, ClipSide.Left);
     }
 
-    private getRightAngle(clipPoints: string[], polygon: IPolygonPoints) {
+    private getRightAngle(clipPoints: string[], polygon: IPolygonPoints): number {
         return this.innerConfig(clipPoints, polygon, ClipSide.Right);
     }
 
@@ -66,7 +66,7 @@ export class PolygonAngleService extends PolygonAbstractConfig<AngleConfig, numb
                 angle = this.dispatchClipSides(this.mapPolygonById.get(valueId));
                 return angle ? of(angle) : of(0);
             }),
-            distinctUntilChanged()
+            distinctUntilChanged(),
         );
     }
 
