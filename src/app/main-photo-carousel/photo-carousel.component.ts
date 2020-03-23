@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
 
 @Component({
-    selector: 'app-carousel-photo',
+    selector: 'photo-carousel',
     template: `
         <!--suppress TypeScriptUnresolvedFunction -->
         <ng-template #tmpl [appCarouselPhoto]="['something', 'another']" let-ctx="controller" let-photo>
             <button mat-icon-button [color]="buttonColor" (click)="ctx.prevPhoto()">
                 <mat-icon color=buttonColor [fontSet]=fontSet>expand_less</mat-icon>
             </button>
-            <app-photo-frame [photo]="photo"></app-photo-frame>
+            <main-photo [photo]="photo"></main-photo>
             <button mat-icon-button color="primary" (click)="ctx.nextPhoto()">
                 <mat-icon [color]=buttonColor [fontSet]=fontSet>expand_more</mat-icon>
             </button>
@@ -18,15 +18,7 @@ import {ThemePalette} from '@angular/material/core';
     styles: [],
 
 })
-export class CarouselPhotoComponent implements OnInit {
+export class PhotoCarouselComponent {
     buttonColor: ThemePalette = 'primary';
     fontSet = 'material-icons-round';
-
-    constructor() {
-    }
-
-    ngOnInit(): void {
-
-    }
-
 }

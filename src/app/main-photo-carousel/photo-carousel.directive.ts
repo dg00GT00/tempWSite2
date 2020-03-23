@@ -1,10 +1,10 @@
 import {Directive, Input, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {ICarouselContext} from './carousel-photo.types';
+import {ICarouselContext} from './photo-carousel.types';
 
 @Directive({
     selector: '[appCarouselPhoto]'
 })
-export class CarouselPhotoDirective implements OnInit {
+export class PhotoCarouselDirective implements OnInit {
     @Input('appCarouselPhoto') images: string[];
     private context: ICarouselContext;
     private index = 0;

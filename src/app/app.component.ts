@@ -10,7 +10,33 @@ import {MainPhotoModule} from './main-photo-carousel';
         <app-main-body></app-main-body>`,
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-    test: any;
+export class AppComponent implements OnInit {
+    @ViewChild('vc', {read: ViewContainerRef}) containerRef: ViewContainerRef;
+
+    constructor(private compiler: Compiler,
+                private injector: Injector,
+    ) {
+    }
+
+    async ngOnInit(): Promise<void> {
+        await this.loadComponent();
+    }
+
+    async loadComponent(): Promise<void> {
+        const {LazyPhotoCarouselComponent, MainPhotoModule} =
+            await import('./main-photo-carousel');
+        const moduleFactory = await this.loadModuleFactory(MainPhotoModule);
+        const moduleRef = moduleFactory.create(this.injector);
+        const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(LazyPhotoCarouselComponent);
+        this.containerRef.createComponent(factory);
+    }
+
+    private async loadModuleFactory(moduleFactory: Type<MainPhotoModule>): Promise<NgModuleFactory<MainPhotoModule>> {
+        if (moduleFactory instanceof NgModuleFactory) {
+            return moduleFactory;
+        } else {
+            return await this.compiler.compileModuleAsync(moduleFactory);
+        }
+    }
 
 }

@@ -2,7 +2,7 @@ import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component} fr
 import {PolygonDynClipService} from './polygon-helpers-services/polygon-dyn/polygon-dyn-clip.service';
 
 @Component({
-    selector: 'app-polygon',
+    selector: 'polygon-clip',
     template: `<div [ngStyle]="polygonStyle"><ng-content></ng-content></div>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

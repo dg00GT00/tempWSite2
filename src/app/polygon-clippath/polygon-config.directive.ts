@@ -6,12 +6,12 @@ import {PolygonComponent} from './polygon.component';
 import {PolygonAngleService} from './polygon-helpers-services/polygon-angle/polygon-angle.service';
 
 @Directive({
-    selector: '[appPolygonConfig]',
+    selector: '[polygonConfig]',
     providers: [PolygonDynClipService, PolygonCalcClipService]
 })
 export class PolygonConfigDirective implements OnInit, OnDestroy {
     @Input() resizeCropWidth: number;
-    @Input('appPolygonConfig') resizeConfig: PolygonConfig = {};
+    @Input('polygonConfig') resizeConfig: PolygonConfig = {};
 
     constructor(
         private el: ElementRef,
