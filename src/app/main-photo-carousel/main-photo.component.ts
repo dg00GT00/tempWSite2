@@ -4,7 +4,7 @@ import {Component, Input} from '@angular/core';
     selector: 'main-photo',
     template: `
         <div class="main-photo">
-            {{photo}}
+            <ng-content></ng-content>
         </div>`,
     styleUrls: ['./main-photo.component.scss']
 })

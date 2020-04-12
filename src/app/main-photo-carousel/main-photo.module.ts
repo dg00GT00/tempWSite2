@@ -7,6 +7,7 @@ import {PhotoCarouselComponent} from './photo-carousel.component';
 import {MainPhotoComponent} from './main-photo.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -19,8 +20,9 @@ import {MatButtonModule} from '@angular/material/button';
     imports: [
         MatIconModule,
         MatButtonModule,
-        CommonModule
-    ],
+        CommonModule,
+        HttpClientModule
+    ]
 })
 export class MainPhotoModule {
 }
